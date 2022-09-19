@@ -1,19 +1,24 @@
 use read_input::prelude::*;
-use rand::distributions::{Distribution, Uniform};
 use colored::Colorize;
+
+use maus_mental_maths::dice::Dice;
 
 fn main() {
     println!("Welcome to Maus Mental Maths Trainer\nLet's Begin!\n");
 
-    let mut rng = rand::thread_rng();
-    let die = Uniform::from(1..=10);
+    /* let mut rng = rand::thread_rng();
+    let die = Uniform::from(1..=10); */
+    let die = Dice::new(1, 10);
 
     let mut correct = 0;
     let mut wrong = 0;
 
     loop {
-        let a: u32 = die.sample(&mut rng);
-        let b: u32 = die.sample(&mut rng);
+        /* let a: u32 = die.sample(&mut rng);
+        let b: u32 = die.sample(&mut rng); */
+        let a = die.roll();
+        let b = die.roll();
+
         print!("{} × {} = ", a, b);
         let input = input::<String>().get();
 
