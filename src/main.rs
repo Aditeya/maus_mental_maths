@@ -1,25 +1,17 @@
 use read_input::prelude::*;
 use colored::Colorize;
 
-use maus_mental_maths::dice::Dice;
+use maus_mental_maths::game::Game;
 
 fn main() {
     println!("Welcome to Maus Mental Maths Trainer\nLet's Begin!\n");
 
-    /* let mut rng = rand::thread_rng();
-    let die = Uniform::from(1..=10); */
-    let die = Dice::new(1, 10);
-
     let mut correct = 0;
     let mut wrong = 0;
+    let mut game = Game::new();
 
     loop {
-        /* let a: u32 = die.sample(&mut rng);
-        let b: u32 = die.sample(&mut rng); */
-        let a = die.roll();
-        let b = die.roll();
-
-        print!("{} × {} = ", a, b);
+        print!("{} × {} = ", game.a, game.b);
         let input = input::<String>().get();
 
         if input == "q" || input == "Q" {
@@ -36,7 +28,7 @@ fn main() {
             ans = n;
         }
 
-        let ab = a*b;
+        let ab = game.answer();
         if ans == ab {
             println!("{}\n", "CORRECT".green());
             correct += 1;
@@ -44,5 +36,7 @@ fn main() {
             println!("{} {}\n", "WRONG:".red(), ab);
             wrong += 1;
         }
+
+        game.next_question();
     }
 }
