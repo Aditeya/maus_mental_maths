@@ -9,10 +9,12 @@ fn main() {
 
     let mut correct = 0;
     let mut wrong = 0;
-    let mut game = Game::new(OP::Mul);
+
+    let mut game = Game::new(get_op());
+    println!();
 
     loop {
-        print!("{} × {} = ", game.a, game.b);
+        print!("{} {} {} = ", game.a, get_sign(&game.op) ,game.b);
         let input = input::<String>().get();
 
        if input == "q" || input == "Q" {
@@ -35,6 +37,38 @@ fn main() {
         }
 
         game.next_question();
+    }
+}
+
+fn get_sign(op: &OP) -> char {
+    match op {
+        OP::Add => '+',
+        OP::Sub => '-',
+        OP::Mul => '×',
+        OP::Div => '÷',
+    }
+}
+
+fn get_op() -> OP {
+    loop {
+        print!("\nChoose a Mode:\n  \
+            1. Addition\n  \
+            2. Subtraction\n  \
+            3. Multiplication\n  \
+            4. Division\n\
+            Mode: ");
+
+        let input = input::<String>().get();
+        match input.as_str() {
+            "1" => return OP::Add,
+            "2" => return OP::Sub,
+            "3" => return OP::Mul,
+            "4" => return OP::Div,
+            _ => {
+                println!("Try Again!");
+                continue;
+            }
+        };
     }
 }
 
