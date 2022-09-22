@@ -2,24 +2,21 @@ use read_input::prelude::*;
 use colored::Colorize;
 
 use maus_mental_maths::game::Game;
+use maus_mental_maths::op::OP;
 
 fn main() {
     println!("Welcome to Maus Mental Maths Trainer\nLet's Begin!\n");
 
     let mut correct = 0;
     let mut wrong = 0;
-    let mut game = Game::new();
+    let mut game = Game::new(OP::Mul);
 
     loop {
         print!("{} × {} = ", game.a, game.b);
         let input = input::<String>().get();
 
-        if input == "q" || input == "Q" {
-            println!("\nExiting...\n");
-            println!("{} : {}", "CORRECT".green(), correct);
-            println!("{}   : {}", "WRONG".red(), wrong);
-            println!("TOTAL   : {}", correct + wrong);
-            println!("\nThanks for playing!");
+       if input == "q" || input == "Q" {
+            game_end(correct, wrong);
             break;
         }
 
@@ -39,4 +36,10 @@ fn main() {
 
         game.next_question();
     }
+}
+
+fn game_end(correct: u32, wrong: u32) {
+     println!("\nExiting...\n\n{} : {}", "CORRECT".green(), correct);
+     println!("{}   : {}", "WRONG".red(), wrong);
+     println!("TOTAL   : {}\n\nThanks for playing!", correct + wrong);
 }
