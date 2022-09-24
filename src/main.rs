@@ -10,7 +10,8 @@ fn main() {
     let mut correct = 0;
     let mut wrong = 0;
 
-    let mut game = Game::new(get_op());
+    let (op, rand_op) = get_op();
+    let mut game = Game::new(op, rand_op);
     println!();
 
     loop {
@@ -49,9 +50,10 @@ fn get_sign(op: &OP) -> char {
     }
 }
 
-fn get_op() -> OP {
+fn get_op() -> (OP, bool) {
     loop {
         print!("\nChoose a Mode:\n  \
+            0. Random\n  \
             1. Addition\n  \
             2. Subtraction\n  \
             3. Multiplication\n  \
@@ -60,15 +62,16 @@ fn get_op() -> OP {
 
         let input = input::<String>().get();
         match input.as_str() {
-            "1" => return OP::Add,
-            "2" => return OP::Sub,
-            "3" => return OP::Mul,
-            "4" => return OP::Div,
+            "0" => return (OP::Add, true ),
+            "1" => return (OP::Add, false),
+            "2" => return (OP::Sub, false),
+            "3" => return (OP::Mul, false),
+            "4" => return (OP::Div, false),
             _ => {
                 println!("Try Again!");
                 continue;
             }
-        };
+        }
     }
 }
 
